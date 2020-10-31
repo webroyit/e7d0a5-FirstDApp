@@ -8,7 +8,8 @@ class App extends React.Component{
     super(props);
     this.state = {
       account: '',
-      taskCount: 0
+      taskCount: 0,
+      tasks: []
     }
   }
 
@@ -30,7 +31,15 @@ class App extends React.Component{
     const taskCount = await todoList.methods.taskCount().call();
     this.setState({ taskCount });
 
-    console.log(todoList);
+    for (let i = 1; i <= taskCount; i++) {
+      // Get the task from the blockchain
+      const task = await todoList.methods.tasks(i).call();
+      this.setState({
+        tasks: [...this.state.tasks, task]
+      });
+    }
+
+    console.log(this.state.tasks);
   }
 
   render(){
@@ -48,6 +57,21 @@ class App extends React.Component{
           <div className="row">
             <main role="main">
               <h1>Tasks</h1>
+              <ul id="taskList" className="list-unstyled">
+                { this.state.tasks.map((task, key) => {
+                  return(
+                    <div className="taskTemplate checkbox" key={key}>
+                      <label>
+                        <input
+                          type="checkbox"
+                          name={task.id}
+                          defaultChecked={task.completed}/>
+                        <span className="content">{task.content}</span>
+                      </label>
+                    </div>
+                  )
+                })}
+              </ul>
             </main>
           </div>
         </div>
