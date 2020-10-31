@@ -7,7 +7,8 @@ class App extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      account: ''
+      account: '',
+      taskCount: 0
     }
   }
 
@@ -25,6 +26,10 @@ class App extends React.Component{
     const todoList = new web3.eth.Contract(TODO_LIST_ABI, TODO_LIST_ADDRESS);
     this.setState({ todoList });
 
+    // Call taskCount() from the blockchain
+    const taskCount = await todoList.methods.taskCount().call();
+    this.setState({ taskCount });
+
     console.log(todoList);
   }
 
@@ -33,6 +38,7 @@ class App extends React.Component{
       <div className="container">
         <h1>Hello World</h1>
         <p>Your account: {this.state.account}</p>
+        <p>Task Count: {this.state.taskCount}</p>
       </div>
     );
   }
