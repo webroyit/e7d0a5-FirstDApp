@@ -35,10 +35,22 @@ class App extends React.Component{
 
   render(){
     return (
-      <div className="container">
-        <h1>Hello World</h1>
-        <p>Your account: {this.state.account}</p>
-        <p>Task Count: {this.state.taskCount}</p>
+      <div>
+        <nav className="navbar navbar-dark fixed-top bg-warning flex-md-nowrap p-0 shadow">
+          <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="/">Todo List</a>
+          <ul className="navbar-nav px-3">
+            <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
+              <small><a className="nav-link" href="/"><span id="account"></span></a></small>
+            </li>
+          </ul>
+        </nav>
+        <div className="container-fluid">
+          <div className="row">
+            <main role="main">
+              <h1>Tasks</h1>
+            </main>
+          </div>
+        </div>
       </div>
     );
   }
