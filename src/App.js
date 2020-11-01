@@ -2,6 +2,7 @@ import React from 'react';
 import Web3 from 'web3';
 import './App.css';
 import { TODO_LIST_ABI, TODO_LIST_ADDRESS } from './config';
+import TodoList from './TodoList';
 
 class App extends React.Component{
   constructor(props){
@@ -9,7 +10,8 @@ class App extends React.Component{
     this.state = {
       account: '',
       taskCount: 0,
-      tasks: []
+      tasks: [],
+      loading: true
     }
   }
 
@@ -39,6 +41,7 @@ class App extends React.Component{
       });
     }
 
+    this.setState({ loading: false });
     console.log(this.state.tasks);
   }
 
@@ -56,22 +59,10 @@ class App extends React.Component{
         <div className="container-fluid">
           <div className="row">
             <main role="main">
-              <h1>Tasks</h1>
-              <ul id="taskList" className="list-unstyled">
-                { this.state.tasks.map((task, key) => {
-                  return(
-                    <div className="taskTemplate checkbox" key={key}>
-                      <label>
-                        <input
-                          type="checkbox"
-                          name={task.id}
-                          defaultChecked={task.completed}/>
-                        <span className="content">{task.content}</span>
-                      </label>
-                    </div>
-                  )
-                })}
-              </ul>
+              <div id="loader" className="text-center">
+                <p className="text-center">Loading...</p>
+              </div>
+              <TodoList tasks={this.state.tasks}/>
             </main>
           </div>
         </div>
