@@ -59,10 +59,13 @@ class App extends React.Component{
         <div className="container-fluid">
           <div className="row">
             <main role="main">
-              <div id="loader" className="text-center">
-                <p className="text-center">Loading...</p>
-              </div>
-              <TodoList tasks={this.state.tasks}/>
+              { this.state.loading
+                ? (
+                    <div id="loader" className="text-center">
+                      <p className="text-center">Loading...</p>
+                    </div>
+                  )
+                : <TodoList tasks={this.state.tasks}/> }
             </main>
           </div>
         </div>
