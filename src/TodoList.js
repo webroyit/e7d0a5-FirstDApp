@@ -25,6 +25,8 @@ class TodoList extends React.Component{
                         <label>
                         <input
                             type="checkbox"
+                            ref={(input) => this.checkbox = input}
+                            onClick={(event) => this.props.toggleCompleted(this.checkbox.name)}
                             name={task.id}
                             defaultChecked={task.completed}/>
                         <span className="content">{task.content}</span>

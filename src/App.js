@@ -14,6 +14,7 @@ class App extends React.Component{
       loading: true
     }
     this.createTask = this.createTask.bind(this);
+    this.toggleCompleted = this.toggleCompleted.bind(this);
   }
 
   componentDidMount(){
@@ -55,6 +56,15 @@ class App extends React.Component{
       })
   }
 
+  toggleCompleted(taskId) {
+    this.setState({ loading: true });
+    this.state.todoList.methods.toggleCompleted(taskId).send({ from: this.state.account })
+      // transcation is completed
+      .once('receipt', (receipt) => {
+        this.setState({ loading: false });
+      })
+  }
+
   render(){
     return (
       <div>
@@ -75,7 +85,7 @@ class App extends React.Component{
                       <p className="text-center">Loading...</p>
                     </div>
                   )
-                : <TodoList tasks={this.state.tasks} createTask={this.createTask}/> }
+                : <TodoList tasks={this.state.tasks} createTask={this.createTask} toggleCompleted={this.toggleCompleted}/> }
             </main>
           </div>
         </div>
